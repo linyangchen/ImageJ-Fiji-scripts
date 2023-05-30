@@ -1,2 +1,2 @@
 # ImageJ-Fiji-scripts
-A collection of scripts in ImageJ/Fiji macro language for automating various processing and analytical tasks.
+A collection of scripts in ImageJ/Fiji macro language for automating various processing and analytical tasks. These are designed to be fully automatic. Once you have edited the user parameters, installed the necessary plugins and configured Fiji as detailed at the beginning of the script, you can run the script from the command line without any pop-up windows requiring manual user input.
