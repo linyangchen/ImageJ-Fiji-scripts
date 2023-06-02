@@ -36,6 +36,8 @@ zoomlevel = 1600
 
 
 run("Z Project...", "projection=[Max Intensity] all");
+run("Grays");
+run("Enhance Contrast", "saturated=0.35");
 rename("videoframes");
 run("Set... ", "zoom="+zoomlevel);
 
