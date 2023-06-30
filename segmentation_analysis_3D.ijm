@@ -50,3 +50,5 @@ run("3D Manager");
 selectWindow("Bindist-watershed");
 Ext.Manager3D_Segment(128, 255);
 Ext.Manager3D_AddImage();
+Ext.Manager3D_Measure();
+
