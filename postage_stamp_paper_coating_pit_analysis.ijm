@@ -56,7 +56,7 @@ for (i = 0; i < filelist.length; i++)
 		run("Fill Holes");
 		run("Watershed");
 		
-		run("Set Measurements...", "area center shape display redirect=None decimal=3");
+		run("Set Measurements...", "area center shape display redirect="+filelist[i]+" decimal=3");
 		
 		//analyze particles
 		run("Analyze Particles...", "size=250-5000 circularity=0.75-1.00 show=Nothing display exclude summarize add");
