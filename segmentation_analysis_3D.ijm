@@ -44,3 +44,9 @@ run("Convert to Mask", "method=Default background=Dark black");
 
 run("3D Objects Counter", "threshold=128 slice=21 min.="+minsize+" max.="+maxsize+" exclude_objects_on_edges objects surfaces centroids centres_of_masses statistics summary");
 
+
+//3D ROI manager
+run("3D Manager");
+selectWindow("Bindist-watershed");
+Ext.Manager3D_Segment(128, 255);
+Ext.Manager3D_AddImage();
