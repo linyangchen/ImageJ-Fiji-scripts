@@ -2,6 +2,7 @@
 //===============================================
 // batch auto threshold and segment micrographs of pits in postage stamp paper coatings
 // record position coordinates, area, circularity etc.
+// https://www.linyangchen.com/De-La-Rue-chalky-paper-coating-pit
 // Lin Yangchen
 // 29 June 2023
 //===============================================
