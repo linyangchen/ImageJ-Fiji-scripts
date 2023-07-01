@@ -60,6 +60,7 @@ for (i = 0; i < filelist.length; i++)
 		//wait(5000); //wait 5 seconds for LoG 3D to finish
 		//setAutoThreshold("Default no-reset");
 		//run("Convert to Mask");
+		//rename(filelist[i] + "_copy");
 		
 		//=================
 
