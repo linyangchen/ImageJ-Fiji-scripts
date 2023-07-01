@@ -41,18 +41,31 @@ for (i = 0; i < filelist.length; i++)
 		run("Duplicate...", "title=duplicate");
 		
 		run("8-bit");
+
+
+
+
+		//=================
 		
+		//METHOD 1
 		run("Subtract Background...", "rolling=50");
-		
 		run("Enhance Contrast", "saturated=0.35");
-		
 		run("Median...", "radius="+rad);
-		
 		run("Duplicate...", "title="+filelist[i]+"_copy");
-		
 		run("Auto Threshold", "method=RenyiEntropy white");
-		
 		run("Invert");
+		
+		//METHOD 2
+		//run("LoG 3D", "sigmax=15 sigmay=15 displaykernel=0");
+		//wait(5000); //wait 5 seconds for LoG 3D to finish
+		//setAutoThreshold("Default no-reset");
+		//run("Convert to Mask");
+		
+		//=================
+
+
+
+
 		run("Fill Holes");
 		run("Watershed");
 		
