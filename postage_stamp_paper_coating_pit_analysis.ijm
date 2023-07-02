@@ -39,7 +39,7 @@ for (i = 0; i < filelist.length; i++)
 		open(input + filelist[i]);
 		rename(filelist[i]);
 		
-		
+		run("Set Scale...", "distance="+scale+" known=1 unit=micron");
 
 
 
@@ -98,7 +98,7 @@ for (i = 0; i < filelist.length; i++)
 		
 		
 		print(" - analyzing particles");
-		run("Analyze Particles...", "size=750-10000 circularity=0.85-1.00 show=Nothing display exclude summarize add");
+		run("Analyze Particles...", "size=250-5000 circularity=0.85-1.00 show=Nothing display exclude summarize add");
 		roiManager("Show None");
 		
 		
@@ -123,10 +123,7 @@ for (i = 0; i < filelist.length; i++)
 		
 		
 		selectWindow(filelist[i]);
-		run("Set Scale...", "distance="+scale+" known=1 unit=micron");
 		run("Scale Bar...", "width=100 thickness=5 font=50 color=White background=Black location=[Lower Right] horizontal");
-		
-		
 		
 
 		run("Images to Stack");
