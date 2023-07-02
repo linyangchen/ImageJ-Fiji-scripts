@@ -77,7 +77,7 @@ for (i = 0; i < filelist.length; i++)
 		print(" - running auto threshold");
 		//run("Auto Threshold", "method=RenyiEntropy white"); 
 		run("Auto Threshold", "method=Default white");
-		wait(30000);
+		wait(10000);
 
 		selectWindow("bw");
 		run("Close");
