@@ -4,10 +4,11 @@
 // record position coordinates, area, circularity etc.
 // https://www.linyangchen.com/De-La-Rue-chalky-paper-coating-pit
 // Lin Yangchen
-// 29 June 2023
+// 2 July 2023
 //===============================================
 
 
+//requires LoG 3D plugin http://bigwww.epfl.ch/sage/soft/LoG3D/
 
 
 //===============================================
@@ -27,7 +28,6 @@ rad = 5;
 //===============================================
 
 
-setBatchMode(true); //do not display images during execution
 
 filelist = getFileList(input);
 
@@ -39,54 +39,80 @@ for (i = 0; i < filelist.length; i++)
 		open(input + filelist[i]);
 		rename(filelist[i]);
 		
-		run("Duplicate...", "title=duplicate");
 		
-		run("8-bit");
 
 
 
 
 		//=================
+
+		//Preprocessing and thresholding
+
+
 		
-		//METHOD 1
-		run("Subtract Background...", "rolling=50");
-		run("Enhance Contrast", "saturated=0.35");
-		run("Median...", "radius="+rad);
+		//METHOD 1 (rolling ball background subtraction, median filter)
+		
+		//run("Duplicate...", "title=duplicate");
+		//run("8-bit");
+		//run("Subtract Background...", "rolling=50");
+		//run("Enhance Contrast", "saturated=0.35");
+		//run("Median...", "radius="+rad);
+		//run("Duplicate...", "title="+filelist[i]+"_copy");
+		//run("Auto Threshold", "method=RenyiEntropy white");
+		
+		
+		
+		//METHOD 2 (Laplacian of Gaussian)
+		
+		run("Duplicate...", "title=bw");
+		run("16-bit");
+		
+		print(" - running Laplacian of Gaussian");
+		run("LoG 3D", "sigmax=14 sigmay=14 displaykernel=0");
+		wait(5000);
+		rename("duplicate");
+		run("16-bit"); run("Invert");
 		run("Duplicate...", "title="+filelist[i]+"_copy");
-		run("Auto Threshold", "method=RenyiEntropy white");
-		run("Invert");
 		
-		//METHOD 2
-		//run("LoG 3D", "sigmax=15 sigmay=15 displaykernel=0");
-		//wait(5000); //wait 5 seconds for LoG 3D to finish
-		//setAutoThreshold("Default no-reset");
-		//run("Convert to Mask");
-		//rename(filelist[i] + "_copy");
+		print(" - running auto threshold");
+		//run("Auto Threshold", "method=RenyiEntropy white"); 
+		run("Auto Threshold", "method=Default white");
+		wait(30000);
+
+		selectWindow("bw");
+		run("Close");
+		
 		
 		//=================
 
 
 
 
+		run("Invert");
 		run("Fill Holes");
-		run("Watershed");
+		//run("Watershed");
+		
+		
 		
 		run("Set Measurements...", "area center shape display redirect="+filelist[i]+" decimal=3");
 		
-		//analyze particles
-		run("Analyze Particles...", "size=250-5000 circularity=0.75-1.00 show=Nothing display exclude summarize add");
+		
+		print(" - analyzing particles");
+		run("Analyze Particles...", "size=750-10000 circularity=0.85-1.00 show=Nothing display exclude summarize add");
 		roiManager("Show None");
 		
 		
 		
 		
 		selectWindow("duplicate");
-		roiManager("Show All without labels");
+		roiManager("Show All");
+		//roiManager("Show All without labels");
 		
+		//change colour and thickness of outlines
 		RoiManager.setGroup(0);
 		RoiManager.setPosition(0);
-		roiManager("Set Color", "red");
-		roiManager("Set Line Width", 5);
+		roiManager("Set Color", "yellow");
+		roiManager("Set Line Width", 3);
 		
 		run("Flatten");
 		
@@ -114,12 +140,15 @@ for (i = 0; i < filelist.length; i++)
 		run("Collect Garbage");
 }
 
-saveAs("Results", rootdir + "data.csv");
 selectWindow("Results");
+saveAs("Results", rootdir + "data.csv");
 run("Close");
 
 selectWindow("Summary");
 saveAs("Results", rootdir + "summary.csv");
+run("Close");
+
+selectWindow("ROI Manager");
 run("Close");
 
 print("job done");
