@@ -155,7 +155,7 @@ function extractprofile(input, output, overlays, filename, radius, scale){
  			}
  		
 	  		updateResults;
-    		saveAs("Results", output + filename + "_" + colours[i] + "_ch" + "_line" + j + ".csv");
+    		saveAs("Results", output + filename + "_line" + j + "_" + colours[i] + "_ch.csv");
     	}
     }
     
