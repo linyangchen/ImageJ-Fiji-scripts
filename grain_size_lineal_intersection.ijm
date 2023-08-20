@@ -95,7 +95,7 @@ function extractprofile(input, output, overlays, filename, radius, scale){
 	//lengths of intersections
     run("Clear Results");
     roiManager("multi-measure measure_all");
-    saveAs("Results", overlays + filename + "_intersect_lengths.csv");
+    saveAs("Results", output + filename + "_intersect_lengths.csv");
     
 
 
