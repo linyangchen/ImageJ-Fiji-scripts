@@ -120,6 +120,7 @@ function extractprofile(input, output, overlays, filename, radius, scale){
     //preprocessing
     selectImage(filename);
     run("Median...", "radius = rad");
+    run("Unsharp Mask...", "radius=1000 mask=0.5");
     
     
     
