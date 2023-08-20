@@ -82,6 +82,12 @@ function extractprofile(input, output, overlays, filename, radius, scale){
     
     
     
+    run("Set Scale...", "distance=" + scale + " known=1 unit=micron");
+	scalebarwidth = 100;
+	scalebarthick = 2;
+	scalebarfont = 24;
+    
+    
     //extract pixel dimensions
     h = getHeight;
     w = getWidth;
@@ -98,13 +104,6 @@ function extractprofile(input, output, overlays, filename, radius, scale){
     saveAs("Results", output + filename + "_intersect_lengths.csv");
     
 
-
-
-    
-    run("Set Scale...", "distance=" + scale + " known=1 unit=micron");
-	scalebarwidth = 100;
-	scalebarthick = 2;
-	scalebarfont = 24;
 
 
 	//show intersects on micrograph
