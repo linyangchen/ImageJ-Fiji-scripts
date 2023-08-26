@@ -199,7 +199,7 @@ filelist = getFileList(input);
 
 
 radius = 50;    //pixel radius for median filter
-nlines = 5;    //number of random lines to draw in each micrograph
+nlines = 50;    //number of random lines to draw in each micrograph
 scale = 0.5;	//pixels per micron
 
 
