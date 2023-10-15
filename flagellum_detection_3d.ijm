@@ -1,6 +1,5 @@
 
 //===============================================
-// LSM 5232 Fiji tutorial
 // runs ridge detection on all images in folder
 // Lin Yangchen
 // NUS Centre for Bioimaging Sciences
@@ -10,7 +9,7 @@
 
 //requires ridge detection plugin to be installed (Biomedgroup update site)
 //all images must be in the same file format and placed in a folder with no other files
-//your image file names should not have any spaces
+//file names should not have any spaces or special characters
 //set Bio-Formats Plugins Configuration for your file format to windowless
 
 
