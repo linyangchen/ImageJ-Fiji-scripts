@@ -23,13 +23,13 @@
 //change input and output to your own folder paths
 //the folder paths should have the slash at the end
 
-//Windows example
+//Windows
 //you have to use forward slash as shown below, not the usual backslash
-//input = "C:/Users/yangchen/Desktop/5232/images/";
+//input  = "C:/Users/yangchen/Desktop/5232/images/";
 //output = "C:/Users/yangchen/Desktop/5232/results/";
 
-//Mac example
-input = "/Users/yangchen/microscopy/CBIS/scripting/Fiji/5232/images/";
+//Mac
+input  = "/Users/yangchen/microscopy/CBIS/scripting/Fiji/5232/images/";
 output = "/Users/yangchen/microscopy/CBIS/scripting/Fiji/5232/results/";
 
 
