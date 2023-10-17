@@ -50,7 +50,7 @@ for (i = 0; i < filelist.length; i++)
 			saveAs("Tiff", outputL + filelist[i]);
 
         	selectWindow("duplicate1");
-        	makeRectangle(1201, 0, 1200, 1200);
+        	makeRectangle(1200, 0, 1200, 1200);
         	run("Crop");
 			saveAs("Tiff", outputR + filelist[i]);
 
