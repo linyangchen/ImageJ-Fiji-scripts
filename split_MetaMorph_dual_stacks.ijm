@@ -6,63 +6,83 @@
 //===============================================
 
 
+//takes a folder containing one or more subfolders of tif and nd files
+//there should be only one level of subfolders
+//a subfolder can contain multiple nd datasets
+//folder and file names should not contain spaces or special characters
+
+//splits left channel from right and merges them into hyperstack
+//currently works only on images of 2400 x 1200 pixels
+//left side becomes channel 1, right side channel 2
+//currently does not assign LUTs according to metadata; please set LUTs yourself
+//leaves original files untouched
 
 
 //===============================================
-// User settings
-//===============================================
-
-//put all the data files in a folder and specify its path here
-input = "/Users/yangchen/Desktop/livesr/orig/";
-
-//create a folder for the split files
-output = "/Users/yangchen/Desktop/livesr/split/";
 
 
-//===============================================
+
+
+
+
+input = getDirectory("choose folder");
+
+//replace backslashes with forward slashes (if using Windows)
+input = replace(input, "\\", "/");
 
 
 setBatchMode(true); //do not display images during execution
 
-outputL = output + "L/"; File.makeDirectory(outputL);
-outputR = output + "R/"; File.makeDirectory(outputR);
 
-filelist = getFileList(input);
+
+subdirs = getFileList(input);
+
+for (j = 0; j < subdirs.length; j++)
+{
+
+output = input + subdirs[j];
+filelist = getFileList(output);
 
 count = 0;
 
 for (i = 0; i < filelist.length; i++)
 {
-		if (endsWith(filelist[i], ".TIF"))
+		if (endsWith(filelist[i], ".TIF") || endsWith(filelist[i], ".tif"))
 		{
 		
 			count = count + 1;
-			print("processing image " + count);
+			print("processing image " + count + " in /" + subdirs[j] + " subfolder");
 		
-			open(input + filelist[i]);
+			open(output + filelist[i]);
 			name = File.nameWithoutExtension;
 		
 			rename("duplicate1");
         	run("Duplicate...", "title=duplicate2 duplicate");
             
-        	makeRectangle(0, 0, 1200, 1200);
+        	makeRectangle(0, 0, 1200, 1200); //crop left half
         	run("Crop");
-			saveAs("Tiff", outputL + filelist[i]);
-
+			
         	selectWindow("duplicate1");
-        	makeRectangle(1200, 0, 1200, 1200);
+        	
+        	makeRectangle(1200, 0, 1200, 1200); //crop right half
         	run("Crop");
-			saveAs("Tiff", outputR + filelist[i]);
+			
+			
+			//merge channels
+			run("Merge Channels...", "c1=duplicate2 c2=duplicate1 create");
+			saveAs("Tiff", output + "merged_" + filelist[i]);
+
 
 			run("Close All");
 			run("Collect Garbage");
 
-		} else if(endsWith(filelist[i], ".nd"))
-		{
-			File.copy(input + filelist[i], outputL + filelist[i]);
-			File.copy(input + filelist[i], outputR + filelist[i]);
 		}
-}
+		
+		
+		
+} //end of file loop
+
+} //end of subdirectory loop
 
 
 print("job done");
