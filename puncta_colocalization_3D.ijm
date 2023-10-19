@@ -17,6 +17,12 @@
 //in Bio-Formats Plugins Configuration, set opening of your file format to windowless
 //folder and file names should not have any spaces or special characters
 
+//the following are saved in a folder with the same name as the image:
+//3D ROIs of segmented objects (one file for each channel)
+//3D measurements of segmented objects
+//percent overlap of every object pair
+
+
 
 //===========================
 //user settings
