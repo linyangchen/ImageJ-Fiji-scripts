@@ -95,17 +95,17 @@ for (i = 0; i < filelist.length; i++)
 	//===========================
 	//3D segmentation
 	
-	for (j = 0; j < 2; j++)
+	for (k = 0; k < 2; k++)
 	{
 		selectImage("dup");
-		Stack.setChannel(j + 1);
-		run("3D Simple Segmentation", "seeds=None low_threshold="+thresh[j]+" min_size=0 max_size=-1");
+		Stack.setChannel(k + 1);
+		run("3D Simple Segmentation", "seeds=None low_threshold="+thresh[k]+" min_size=0 max_size=-1");
 		
 		selectImage("Bin");
-		rename("Bin_ch" + chn[j]);
+		rename("Bin_ch" + chn[k]);
 		
 		selectImage("Seg");
-		rename("Seg_ch" + chn[j]);
+		rename("Seg_ch" + chn[k]);
 	}
 	
 	
