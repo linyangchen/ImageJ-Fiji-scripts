@@ -1,8 +1,8 @@
 //================================
-//Find maxima, measure their intensities and return average value
+//Find maxima, measure their intensities and return average and pointwise values
 //Lin Yangchen
 //NUS Centre for Bioimaging Sciences
-//15 October 2025
+//7 January 2026
 //================================
 
 
@@ -27,7 +27,7 @@ function fmri(chn){
 	selectImage(chn);
 	run("Find Maxima...", "prominence=10 exclude output=[Single Points]");
 	run("Set Measurements...", "mean redirect=" + chn + " decimal=2");
-	run("Analyze Particles...", "summarize");
+	run("Analyze Particles...", "display clear summarize");
 	
 }
 
@@ -83,12 +83,29 @@ for (i = 0; i < filelist.length; i++)
 		fmri(channels[j]);
 		
 		if (i == 0 && j == 0){
-			//create column for file names
+
+			//create column for file names and channels in summary table
+			selectWindow("Summary");
 			Table.setColumn("File");
+			Table.setColumn("Channel");
+			
 		}
 		
-		//add file name to data table
+		
+		//add file name and channel to summary table
+		selectWindow("Summary");
 		Table.set("File", Table.size-1, filelist[i]);
+		Table.set("Channel", Table.size-1, channels[j]);
+		
+		//create columns and add file name and channel to results table
+		selectWindow("Results");
+		Table.setColumn("File");
+		Table.setColumn("Channel");
+		for (k = 0; k < Table.size; k++){
+			Table.set("File", k, filelist[i]);
+			Table.set("Channel", k, channels[j]);
+		}
+		saveAs("Results", dir + "data_points_" + File.getNameWithoutExtension(filelist[i]) + "_" + channels[j] + ".csv");
 		
 	}
 
@@ -104,6 +121,6 @@ for (i = 0; i < filelist.length; i++)
 
 
 selectWindow("Summary");
-saveAs("Results", dir + "data.csv");
+saveAs("Results", dir + "data_summary.csv");
 
 print("job finished");
