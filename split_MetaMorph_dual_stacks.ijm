@@ -3,25 +3,21 @@
 // Lin Yangchen
 // NUS Centre for Bioimaging Sciences
 // 29 June 2023
+// updated 12 October 2026
 //===============================================
 
 
-//takes a folder containing one or more subfolders of tif and nd files
-//there should be only one level of subfolders
-//a subfolder can contain multiple nd datasets
-//folder and file names should not contain spaces or special characters
+//takes a folder of tif files
+//file names should not contain spaces or special characters
 
 //splits left channel from right and merges them into hyperstack
 //currently works only on images of 2400 x 1200 pixels
 //left side becomes channel 1, right side channel 2
-//currently does not assign LUTs according to metadata; please set LUTs yourself
+//LUTs are as is; change them yourself if needed
 //leaves original files untouched
 
 
 //===============================================
-
-
-
 
 
 
@@ -34,26 +30,18 @@ input = replace(input, "\\", "/");
 setBatchMode(true); //do not display images during execution
 
 
-
-subdirs = getFileList(input);
-
-for (j = 0; j < subdirs.length; j++)
-{
-
-output = input + subdirs[j];
-filelist = getFileList(output);
-
+//image splitting and channel merging
+filelist = getFileList(input);
 count = 0;
-
 for (i = 0; i < filelist.length; i++)
 {
 		if (endsWith(filelist[i], ".TIF") || endsWith(filelist[i], ".tif"))
 		{
 		
 			count = count + 1;
-			print("processing image " + count + " in /" + subdirs[j] + " subfolder");
+			print("splitting image stack " + count);
 		
-			open(output + filelist[i]);
+			open(input + filelist[i]);
 			name = File.nameWithoutExtension;
 		
 			rename("duplicate1");
@@ -70,19 +58,14 @@ for (i = 0; i < filelist.length; i++)
 			
 			//merge channels
 			run("Merge Channels...", "c1=duplicate2 c2=duplicate1 create");
-			saveAs("Tiff", output + "merged_" + filelist[i]);
+			saveAs("Tiff", input + "merged_" + filelist[i]);
 
 
 			run("Close All");
 			run("Collect Garbage");
 
 		}
-		
-		
-		
 } //end of file loop
-
-} //end of subdirectory loop
 
 
 print("job done");
